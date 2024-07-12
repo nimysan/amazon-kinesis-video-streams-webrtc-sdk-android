@@ -45,6 +45,7 @@ import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSSessionCredentials;
 import com.amazonaws.kinesisvideo.demoapp.KinesisVideoWebRtcDemoApp;
 import com.amazonaws.kinesisvideo.demoapp.R;
+import com.amazonaws.kinesisvideo.producer.Time;
 import com.amazonaws.kinesisvideo.signaling.SignalingListener;
 import com.amazonaws.kinesisvideo.signaling.model.Event;
 import com.amazonaws.kinesisvideo.signaling.model.Message;
@@ -796,9 +797,15 @@ public class WebRtcActivity extends AppCompatActivity {
         });
 
         sendDataChannelButton.setOnClickListener(view -> {
-            localDataChannel.send(new DataChannel.Buffer(
-                    ByteBuffer.wrap(dataChannelText.getText().toString()
-                            .getBytes(Charset.defaultCharset())), false));
+            String counts = String.valueOf(dataChannelText.getText());
+            int c = Integer.parseInt(counts);
+            for(int i=0;i<c;i++){
+                String cL = System.currentTimeMillis()+"";
+                localDataChannel.send(new DataChannel.Buffer(
+                        ByteBuffer.wrap(cL
+                                .getBytes(Charset.defaultCharset())), false));
+            }
+
             dataChannelText.setText("");
         });
     }
